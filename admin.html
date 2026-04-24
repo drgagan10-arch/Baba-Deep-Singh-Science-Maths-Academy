@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Baba Deep Singh Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="container nav-container">
+            <div class="logo"><h2>Baba Deep Singh <span>Science & Maths</span></h2><p class="logo-sub">Academy</p></div>
+            <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="admin.html" class="active">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main style="min-height: 70vh;">
+        <div id="adminContainer" class="container"></div>
+    </main>
+    <footer><div class="container footer-grid"><div class="footer-col"><h4>Secure Admin Area</h4></div></div><div class="footer-bottom"><p>© 2025 Academy</p></div></footer>
+    <script type="module">
+        import { getAllQueries } from './firebase.js';
+        const container = document.getElementById('adminContainer');
+        let logged = localStorage.getItem('adminAuth') === 'true';
+
+        function renderLogin() {
+            container.innerHTML = `
+                <div class="admin-login-box">
+                    <div class="staff-alert">
+                        <i class="fas fa-shield-alt"></i> STAFF ONLY - AUTHORIZED ACCESS REQUIRED
+                    </div>
+                    <div class="admin-icon"><i class="fas fa-lock"></i></div>
+                    <h2>Admin Login</h2>
+                    <p class="login-sub">Enter your secure credentials</p>
+                    <div class="input-group-login">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="adminUser" placeholder="Username" autocomplete="off" value="">
+                    </div>
+                    <div class="input-group-login">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="adminPass" placeholder="Password" autocomplete="new-password" value="">
+                    </div>
+                    <button id="loginBtn" class="admin-login-btn">Login <i class="fas fa-arrow-right"></i></button>
+                </div>
+            `;
+            // Force empty fields again (browser autofill override)
+            const userField = document.getElementById('adminUser');
+            const passField = document.getElementById('adminPass');
+            if (userField) userField.value = '';
+            if (passField) passField.value = '';
+
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                const user = document.getElementById('adminUser').value;
+                const pass = document.getElementById('adminPass').value;
+                if(user === 'admin' && pass === '123') {
+                    localStorage.setItem('adminAuth', 'true');
+                    logged = true;
+                    loadDashboard();
+                } else {
+                    alert('❌ Unauthorized access. This area is restricted to staff only.');
+                    // Clear fields on failed attempt
+                    document.getElementById('adminUser').value = '';
+                    document.getElementById('adminPass').value = '';
+                }
+            });
+        }
+
+        async function loadDashboard() {
+            container.innerHTML = `
+                <div class="admin-dashboard">
+                    <div class="staff-banner">
+                        <i class="fas fa-user-secret"></i> STAFF DASHBOARD - CONFIDENTIAL
+                    </div>
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-database"></i> Student Queries</h2>
+                        <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                    <div id="queriesList" class="queries-container">Loading queries...</div>
+                </div>
+            `;
+            document.getElementById('logoutBtn')?.addEventListener('click', () => {
+                localStorage.removeItem('adminAuth');
+                logged = false;
+                renderLogin();
+            });
+            try {
+                const queries = await getAllQueries();
+                const listDiv = document.getElementById('queriesList');
+                if(queries.length === 0) {
+                    listDiv.innerHTML = '<div class="empty-queries"><i class="fas fa-inbox"></i><p>No queries yet. Check back later.</p></div>';
+                    return;
+                }
+                let html = `<div class="queries-table-wrapper"><table class="queries-table">
+                    <thead><tr><th>Name</th><th>Phone</th><th>Message</th><th>Date & Time</th></thead><tbody>`;
+                queries.forEach(q => {
+                    const date = q.timestamp ? new Date(q.timestamp).toLocaleString() : 'Recent';
+                    html += `<tr><td data-label="Name">${escapeHtml(q.name)}</td><td data-label="Phone">${escapeHtml(q.phone)}</td><td data-label="Message">${escapeHtml(q.message)}</td><td data-label="Date">${date}</td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+                listDiv.innerHTML = html;
+            } catch(e) {
+                document.getElementById('queriesList').innerHTML = '<div class="error-loading"><i class="fas fa-exclamation-triangle"></i> Error loading data. Contact IT support.</div>';
+                console.error(e);
+            }
+        }
+
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        if(logged) loadDashboard(); else renderLogin();
+    </script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>

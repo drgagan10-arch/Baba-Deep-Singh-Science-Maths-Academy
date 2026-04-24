@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Baba Deep Singh Academy - Call +91 8221826243, visit us at 48 Diamond Avenue, Amritsar, or send a query.">
+    <title>Contact | Baba Deep Singh Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="container nav-container">
+            <div class="logo"><h2>Baba Deep Singh <span>Science & Maths</span></h2><p class="logo-sub">Academy</p></div>
+            <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <div class="contact-details">
+                    <p><i class="fas fa-phone-alt"></i> +91 8221826243</p>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp: <strong>8221826243</strong></p>
+                    <p><i class="fas fa-map-marker-alt"></i> 48 Diamond Avenue, Gali No. 5, Majitha Road, Amritsar, Punjab</p>
+                </div>
+                <a href="https://wa.me/918221826243?text=Hi%20I%20need%20information" target="_blank" class="btn-wa-contact"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?q=48%20Diamond%20Avenue%2C%20Gali%20No.%205%2C%20Majitha%20Road%2C%20Amritsar%2C%20Punjab&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="220" style="border:0; border-radius: 24px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+            <div class="form-container">
+                <h3>Send a Query</h3>
+                <form id="queryForm">
+                    <div class="input-group"><input type="text" id="queryName" placeholder="Your Full Name" required></div>
+                    <div class="input-group"><input type="tel" id="queryPhone" placeholder="Phone Number" required></div>
+                    <div class="input-group"><textarea rows="4" id="queryMsg" placeholder="Write your query about courses, batches..." required></textarea></div>
+                    <button type="submit" class="btn-submit" id="submitBtn">Submit Query ➤</button>
+                </form>
+                <div id="formMessage" class="form-message"></div>
+            </div>
+        </div>
+    </main>
+    <a href="https://wa.me/918221826243?text=Hello%20I%20have%20a%20question" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i> <span>Quick help</span></a>
+    <footer><div class="container footer-grid"><div class="footer-col"><h4>Baba Deep Singh Academy</h4><p>Your success partner</p></div><div class="footer-col"><h4>Location</h4><p>Amritsar, Punjab</p></div></div><div class="footer-bottom"><p>© 2025 Academy</p></div></footer>
+    <script type="module">
+        import { saveQuery } from './firebase.js';
+        
+        const form = document.getElementById('queryForm');
+        const msgDiv = document.getElementById('formMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Clear previous message
+            msgDiv.innerHTML = '';
+            
+            const name = document.getElementById('queryName').value.trim();
+            const phone = document.getElementById('queryPhone').value.trim();
+            const message = document.getElementById('queryMsg').value.trim();
+            
+            if(!name || !phone || !message) {
+                msgDiv.innerHTML = '<span class="error-msg">❌ All fields are required.</span>';
+                return;
+            }
+            
+            // Disable button to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-pulse"></i>';
+            
+            try {
+                await saveQuery(name, phone, message);
+                msgDiv.innerHTML = '<span class="success-msg">✓ Query sent successfully! We will contact you soon.</span>';
+                form.reset();
+                
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    if (msgDiv.innerHTML.includes('successfully')) {
+                        msgDiv.innerHTML = '';
+                    }
+                }, 5000);
+            } catch (err) {
+                console.error('Save error:', err);
+                let errorMsg = '❌ Error sending query. ';
+                if (err.message.includes('permission')) {
+                    errorMsg += 'Firebase permission denied. Please check database rules.';
+                } else {
+                    errorMsg += 'Please try again later.';
+                }
+                msgDiv.innerHTML = `<span class="error-msg">${errorMsg}</span>`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit Query ➤';
+            }
+        });
+    </script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
