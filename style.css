@@ -274,3 +274,8 @@ footer {
     font-size: 24px;
     font-weight: 600;
 }
+.secondary-heading {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 10px;
+}
