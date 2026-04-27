@@ -270,3 +270,7 @@ footer {
     .admin-dashboard { padding: 20px; margin: 30px 15px; }
     .queries-table th, .queries-table td { padding: 10px 8px; font-size: 0.8rem; }
 }
+.highlight-subhead {
+    font-size: 24px;
+    font-weight: 600;
+}
