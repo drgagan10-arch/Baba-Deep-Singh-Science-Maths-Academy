@@ -279,3 +279,13 @@ footer {
     font-weight: 700;
     margin-top: 10px;
 }
+.secondary-heading {
+    font-size: 34px;   /* bigger like you want */
+    font-weight: 700;
+    margin-top: 12px;
+    line-height: 1.2;
+}
+
+.secondary-heading span {
+    color: #2b6cb0;   /* same type highlight feel as main heading */
+}
