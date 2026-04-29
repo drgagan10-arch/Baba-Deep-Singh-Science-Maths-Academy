@@ -2,43 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Classes - BDS Academy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Online Classes | Baba Deep Singh Academy</title>
+
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav class="navbar">
-    <div class="logo">BDS Academy</div>
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="online-classes.html" class="active">Online Classes</a></li>
-        <li><a href="contact.html">Contact</a></li>
-    </ul>
+<!-- SAME NAVBAR AS MAIN SITE -->
+<nav class="glass-nav">
+    <div class="container nav-container">
+        <div class="logo">
+            <h2>Baba Deep Singh <span>Science & Maths</span></h2>
+            <p class="logo-sub">Academy</p>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="online-classes.html" class="active">Online Classes</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+    </div>
 </nav>
 
-<!-- Online Classes Section -->
-<section class="container">
-    <h1>Online Classes</h1>
+<main>
 
-    <p>
-        We offer high-quality online classes for Science and Mathematics.
-        Our classes are interactive, easy to understand, and designed to help
-        students achieve excellent results from the comfort of their home.
-    </p>
+<!-- HERO SECTION -->
+<section class="hero" style="background-image: linear-gradient(135deg, rgba(255,255,245,0.9), rgba(235,248,255,0.9)), url('https://images.unsplash.com/photo-1584697964192-9e2c3c6b0a87?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center;">
+    <div class="container hero-content">
+        <div class="hero-text glass-card">
 
-    <p>
-        Join now and start learning with expert guidance.
-    </p>
+            <span class="badge">💻 Learn From Anywhere</span>
 
-    <!-- Button Link -->
-    <a href="https://drgagan10-arch.github.io/BDS-Science-Maths-Academy-Online/index.html" 
-       class="btn">
-       Start Classes – Click Here
-    </a>
+            <h1>Online <span>Classes</span></h1>
+
+            <p style="margin-top:15px;">
+                High-quality online coaching for Science & Mathematics with live classes,
+                recordings, doubt solving, and regular tests.
+            </p>
+
+            <a href="https://drgagan10-arch.github.io/BDS-Science-Maths-Academy-Online/index.html"
+               target="_blank"
+               class="btn-whatsapp">
+               🚀 Start Classes
+            </a>
+
+        </div>
+    </div>
 </section>
+
+<!-- FEATURES -->
+<section class="section features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Online <span>Features</span></h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature-card">
+                <i class="fas fa-laptop"></i>
+                <h3>Live Interactive Classes</h3>
+                <p>Attend real-time sessions with expert teachers and ask doubts instantly.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-video"></i>
+                <h3>Recorded Lectures</h3>
+                <p>Revise anytime with recorded classes and never miss a concept.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-file-alt"></i>
+                <h3>Test Series</h3>
+                <p>Practice with online tests and track your performance.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-comments"></i>
+                <h3>Doubt Support</h3>
+                <p>Dedicated doubt sessions and personal guidance.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/918221826243?text=Hello%20I%20want%20online%20classes"
+   class="floating-wa"
+   target="_blank">
+   <i class="fab fa-whatsapp"></i>
+   <span>Need help?</span>
+</a>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container footer-grid">
+
+        <div class="footer-col">
+            <h4>Baba Deep Singh Academy</h4>
+            <p>Grounded in knowledge, driven by excellence.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p><i class="fas fa-phone-alt"></i> +91 8221826243</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Baba Deep Singh Academy</p>
+    </div>
+</footer>
+
+<script src="script.js" type="module"></script>
 
 </body>
 </html>
